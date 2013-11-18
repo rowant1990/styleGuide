@@ -145,7 +145,7 @@ Property definitions should be used in place of naked instance variables wheneve
 
 **For example:**
 
-    @interface NYTSection: NSObject
+    @interface DEGSection: NSObject
 
     @property (nonatomic) NSString *headline;
 
@@ -154,7 +154,7 @@ Property definitions should be used in place of naked instance variables wheneve
 
 **Not:**
 
-    @interface NYTSection : NSObject {
+    @interface DEGSection : NSObject {
         NSString *headline;
     }
 
@@ -297,20 +297,20 @@ When using `enum`s, it is recommended to use the new fixed underlying type speci
 **Example:**
 
 
-    typedef NS_ENUM(NSInteger, NYTAdRequestState) {
-        NYTAdRequestStateInactive,
-    	NYTAdRequestStateLoading
+    typedef NS_ENUM(NSInteger, DEGAdRequestState) {
+        DEGAdRequestStateInactive,
+    	DEGAdRequestStateLoading
     };
 
 
 ## Private Properties
 
-Private properties should be declared in class extensions (anonymous categories) in the implementation file of a class. Named categories (such as `NYTPrivate` or `private`) should never be used unless extending another class.
+Private properties should be declared in class extensions (anonymous categories) in the implementation file of a class. Named categories (such as `DEGPrivate` or `private`) should never be used unless extending another class.
 
 **For example:**
 
 
-    @interface NYTAdvertisement ()
+    @interface DEGAdvertisement ()
 
     @property (nonatomic, strong) GADBannerView *googleAdView;
     @property (nonatomic, strong) ADBannerView *iAdView;
