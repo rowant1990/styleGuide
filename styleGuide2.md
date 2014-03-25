@@ -243,6 +243,20 @@ Block comments should generally be avoided, as code should be as self-documentin
     NSNumber *shouldUseLiterals = [NSNumber numberWithBool:YES];
     NSNumber *buildingZIPCode = [NSNumber numberWithInteger:10018];
 
+Literals should also be used when getting information out of dictoanry and arrays.  
+
+*For example:**
+
+
+    NSString *name = self.names[2];
+    NSString *name = self.names[@"iPad"];
+
+**Not:**
+
+
+    NSString *name = [self.names objectAtIndex:2];
+    NSString *name = [self.names valueForKey:@"iPad"];
+
 
 ## CGRect Functions
 
