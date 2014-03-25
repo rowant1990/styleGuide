@@ -243,9 +243,9 @@ Block comments should generally be avoided, as code should be as self-documentin
     NSNumber *shouldUseLiterals = [NSNumber numberWithBool:YES];
     NSNumber *buildingZIPCode = [NSNumber numberWithInteger:10018];
 
-Literals should also be used when getting information out of dictoanry and arrays.  
+Literals should also be used for getting information out of dictionaries and arrays.  
 
-*For example:**
+**For example:**
 
 
     NSString *name = self.names[2];
