@@ -32,6 +32,8 @@ Here are some of the documents from Apple that informed the style guide. If some
 * [Image Naming](#image-naming)
 * [Booleans](#booleans)
 * [Singletons](#singletons)
+* [DLog](#dlog)
+* [Pragma Marks](#pragma-marks)
 * [Xcode Project](#xcode-project)
 
 ## Dot-Notation Syntax
@@ -39,16 +41,16 @@ Here are some of the documents from Apple that informed the style guide. If some
 Dot-notation should **always** be used for accessing and mutating properties. Bracket notation is preferred in all other instances.
 
 **For example:**
-```objc
-view.backgroundColor = [UIColor orangeColor];
-[UIApplication sharedApplication].delegate;
-```
+
+    view.backgroundColor = [UIColor orangeColor];
+    [UIApplication sharedApplication].delegate;
+
 
 **Not:**
-```objc
-[view setBackgroundColor:[UIColor orangeColor]];
-UIApplication.sharedApplication.delegate;
-```
+
+    [view setBackgroundColor:[UIColor orangeColor]];
+    UIApplication.sharedApplication.delegate;
+
 
 ## Spacing
 
@@ -56,14 +58,14 @@ UIApplication.sharedApplication.delegate;
 * Method braces and other braces (`if`/`else`/`switch`/`while` etc.) always open on the same line as the statement but close on a new line.
 
 **For example:**
-```objc
-if (user.isHappy) {
-//Do something
-}
-else {
-//Do something else
-}
-```
+
+    if (user.isHappy) {
+    //Do something
+    }
+    else {
+    //Do something else
+    }
+
 * There should be exactly one blank line between methods to aid in visual clarity and organization. Whitespace within methods should separate functionality, but often there should probably be new methods.
 * `@synthesize` and `@dynamic` should each be declared on new lines in the implementation if used.
 
@@ -72,58 +74,56 @@ else {
 Conditional bodies should always use braces even when a conditional body could be written without braces. These errors include adding a second line and expecting it to be part of the if-statement. Another, [even more dangerous defect](http://programmers.stackexchange.com/a/16530) may happen where the line "inside" the if-statement is commented out, and the next line unwittingly becomes part of the if-statement. In addition, this style is more consistent with all other conditionals, and therefore more easily scannable.
 
 **For example:**
-```objc
-if (!error) {
-    return success;
-}
-```
+
+    if (!error) {
+        return success;
+    }
+
 
 **Not:**
-```objc
-if (!error)
-    return success;
-```
+
+    if (!error)
+        return success;
 
 or
 
-```objc
-if (!error) return success;
-```
+    if (!error) return success;
+
 
 ### Ternary Operator
 
 The Ternary operator, ? , should only be used when it increases clarity or code neatness. A single condition is usually all that should be evaluated. Evaluating multiple conditions is usually more understandable as an if statement, or refactored into instance variables.
 
 **For example:**
-```objc
-result = a > b ? x : y;
-```
+
+    result = a > b ? x : y;
+
 
 **Not:**
-```objc
-result = a > b ? x = c > d ? c : d : y;
-```
+
+    result = a > b ? x = c > d ? c : d : y;
+
 
 ## Error handling
 
 When methods return an error parameter by reference, switch on the returned value, not the error variable.
 
 **For example:**
-```objc
-NSError *error;
-if (![self trySomethingWithError:&error]) {
-    // Handle Error
-}
-```
+
+    NSError *error;
+    if (![self trySomethingWithError:&error]) {
+       // Handle Error
+    }
+
 
 **Not:**
-```objc
-NSError *error;
-[self trySomethingWithError:&error];
-if (error) {
-    // Handle Error
-}
-```
+
+    NSError *error;
+    [self trySomethingWithError:&error];
+    if (error) {
+        // Handle Error
+    }
+
 
 Some of Apple’s APIs write garbage values to the error parameter (if non-NULL) in successful cases, so switching on the error can cause false negatives (and subsequently crash).
 
@@ -132,9 +132,9 @@ Some of Apple’s APIs write garbage values to the error parameter (if non-NULL)
 In method signatures, there should be a space after the scope (-/+ symbol). There should be a space between the method segments.
 
 **For Example**:
-```objc
-- (void)setExampleText:(NSString *)text image:(UIImage *)image;
-```
+
+    - (void)setExampleText:(NSString *)text image:(UIImage *)image;
+
 ## Variables
 
 Variables should be named as descriptively as possible. Single letter variable names should be avoided except in `for()` loops.
@@ -145,21 +145,19 @@ Property definitions should be used in place of naked instance variables wheneve
 
 **For example:**
 
-```objc
-@interface NYTSection: NSObject
+    @interface DEGSection: NSObject
 
-@property (nonatomic) NSString *headline;
+    @property (nonatomic) NSString *headline;
 
-@end
-```
+    @end
+
 
 **Not:**
 
-```objc
-@interface NYTSection : NSObject {
-    NSString *headline;
-}
-```
+    @interface DEGSection : NSObject {
+        NSString *headline;
+    }
+
 
 ## Naming
 
@@ -169,43 +167,35 @@ Long, descriptive method and variable names are good.
 
 **For example:**
 
-```objc
-UIButton *settingsButton;
-```
+    UIButton *settingsButton;
+
 
 **Not**
 
-```objc
-UIButton *setBut;
-```
+    UIButton *setBut;
+
 
 A three letter prefix (e.g. `DEG`) should always be used for class names and constants, however may be omitted for Core Data entity names. Constants should be camel-case with all words capitalized and prefixed by the related class name for clarity.
 
 **For example:**
 
-```objc
-static const NSTimeInterval DEGViewControllerNavigationFadeAnimationDuration = 0.3;
-```
+    static const NSTimeInterval DEGViewControllerNavigationFadeAnimationDuration = 0.3;
 
 **Not:**
 
-```objc
-static const NSTimeInterval fadetime = 1.7;
-```
+    static const NSTimeInterval fadetime = 1.7;
+
 
 Properties should be camel-case with the leading word being lowercase. **If Xcode can automatically synthesize the variable, then let it.** Otherwise, in order to be consistent, the backing instance variables for these properties should be camel-case with the leading word being lowercase and a leading underscore. This is the same format as Xcode's default synthesis.
 
 **For example:**
 
-```objc
-@synthesize descriptiveVariableName = _descriptiveVariableName;
-```
+    @synthesize descriptiveVariableName = _descriptiveVariableName;
 
 **Not:**
 
-```objc
-id varnm;
-```
+    id varnm;
+
 
 ### Underscores
 
@@ -223,16 +213,15 @@ Block comments should generally be avoided, as code should be as self-documentin
 
 `init` methods should be structured like this:
 
-```objc
-- (instancetype)init {
-    self = [super init]; // or call the designated initalizer
-    if (self) {
-        // Custom initialization
+    - (instancetype)init {
+        self = [super init]; // or call the designated initalizer
+        if (self) {
+            // Custom initialization
+        }
+
+        return self;
     }
 
-    return self;
-}
-```
 
 ## Literals
 
@@ -240,21 +229,34 @@ Block comments should generally be avoided, as code should be as self-documentin
 
 **For example:**
 
-```objc
-NSArray *names = @[@"Brian", @"Matt", @"Chris", @"Alex", @"Steve", @"Paul"];
-NSDictionary *productManagers = @{@"iPhone" : @"Kate", @"iPad" : @"Kamal", @"Mobile Web" : @"Bill"};
-NSNumber *shouldUseLiterals = @YES;
-NSNumber *buildingZIPCode = @10018;
-```
+
+    NSArray *names = @[@"Brian", @"Matt", @"Chris", @"Alex", @"Steve", @"Paul"];
+    NSDictionary *productManagers = @{@"iPhone" : @"Kate", @"iPad" : @"Kamal", @"Mobile Web" : @"Bill"};
+    NSNumber *shouldUseLiterals = @YES;
+    NSNumber *buildingZIPCode = @10018;
 
 **Not:**
 
-```objc
-NSArray *names = [NSArray arrayWithObjects:@"Brian", @"Matt", @"Chris", @"Alex", @"Steve", @"Paul", nil];
-NSDictionary *productManagers = [NSDictionary dictionaryWithObjectsAndKeys: @"Kate", @"iPhone", @"Kamal", @"iPad", @"Bill", @"Mobile Web", nil];
-NSNumber *shouldUseLiterals = [NSNumber numberWithBool:YES];
-NSNumber *buildingZIPCode = [NSNumber numberWithInteger:10018];
-```
+
+    NSArray *names = [NSArray arrayWithObjects:@"Brian", @"Matt", @"Chris", @"Alex", @"Steve", @"Paul", nil];
+    NSDictionary *productManagers = [NSDictionary dictionaryWithObjectsAndKeys: @"Kate", @"iPhone", @"Kamal", @"iPad", @"Bill", @"Mobile Web", nil];
+    NSNumber *shouldUseLiterals = [NSNumber numberWithBool:YES];
+    NSNumber *buildingZIPCode = [NSNumber numberWithInteger:10018];
+
+Literals should also be used for getting information out of dictionaries and arrays.  
+
+**For example:**
+
+
+    NSString *name = self.names[2];
+    NSString *name = self.names[@"iPad"];
+
+**Not:**
+
+
+    NSString *name = [self.names objectAtIndex:2];
+    NSString *name = [self.names valueForKey:@"iPad"];
+
 
 ## CGRect Functions
 
@@ -264,25 +266,23 @@ When accessing the `x`, `y`, `width`, or `height` of a `CGRect`, always use the 
 
 **For example:**
 
-```objc
-CGRect frame = self.view.frame;
+    CGRect frame = self.view.frame;
 
-CGFloat x = CGRectGetMinX(frame);
-CGFloat y = CGRectGetMinY(frame);
-CGFloat width = CGRectGetWidth(frame);
-CGFloat height = CGRectGetHeight(frame);
-```
+    CGFloat x = CGRectGetMinX(frame);
+    CGFloat y = CGRectGetMinY(frame);
+    CGFloat width = CGRectGetWidth(frame);
+    CGFloat height = CGRectGetHeight(frame);
+
 
 **Not:**
 
-```objc
-CGRect frame = self.view.frame;
+    CGRect frame = self.view.frame;
 
-CGFloat x = frame.origin.x;
-CGFloat y = frame.origin.y;
-CGFloat width = frame.size.width;
-CGFloat height = frame.size.height;
-```
+    CGFloat x = frame.origin.x;
+    CGFloat y = frame.origin.y;
+    CGFloat width = frame.size.width;
+    CGFloat height = frame.size.height;
+
 
 ## Constants
 
@@ -290,19 +290,19 @@ Constants are preferred over in-line string literals or numbers, as they allow f
 
 **For example:**
 
-```objc
-static NSString * const DEGAboutViewControllerCompanyName = @"Degree 53";
 
-static const CGFloat DEGImageThumbnailHeight = 50.0;
-```
+    static NSString * const DEGAboutViewControllerCompanyName = @"Degree 53";
+
+    static const CGFloat DEGImageThumbnailHeight = 50.0;
+
 
 **Not:**
 
-```objc
-#define CompanyName @"Degree 53"
 
-#define thumbnailHeight 2
-```
+    #define CompanyName @"Degree 53"
+
+    #define thumbnailHeight 2
+
 
 ## Enumerated Types
 
@@ -310,28 +310,28 @@ When using `enum`s, it is recommended to use the new fixed underlying type speci
 
 **Example:**
 
-```objc
-typedef NS_ENUM(NSInteger, NYTAdRequestState) {
-    NYTAdRequestStateInactive,
-    NYTAdRequestStateLoading
-};
-```
+
+    typedef NS_ENUM(NSInteger, DEGAdRequestState) {
+        DEGAdRequestStateInactive,
+    	DEGAdRequestStateLoading
+    };
+
 
 ## Private Properties
 
-Private properties should be declared in class extensions (anonymous categories) in the implementation file of a class. Named categories (such as `NYTPrivate` or `private`) should never be used unless extending another class.
+Private properties should be declared in class extensions (anonymous categories) in the implementation file of a class. Named categories (such as `DEGPrivate` or `private`) should never be used unless extending another class.
 
 **For example:**
 
-```objc
-@interface NYTAdvertisement ()
 
-@property (nonatomic, strong) GADBannerView *googleAdView;
-@property (nonatomic, strong) ADBannerView *iAdView;
-@property (nonatomic, strong) UIWebView *adXWebView;
+    @interface DEGAdvertisement ()
 
-@end
-```
+    @property (nonatomic, strong) GADBannerView *googleAdView;
+    @property (nonatomic, strong) ADBannerView *iAdView;
+    @property (nonatomic, strong) UIWebView *adXWebView;
+
+    @end
+
 
 ## Image Naming
 
@@ -353,79 +353,87 @@ This allows for more consistency across files and greater visual clarity.
 
 **For example:**
 
-```objc
-if (!someObject) {
-}
-```
+    objc
+    if (!someObject) {
+    }
+
 
 **Not:**
 
-```objc
-if (someObject == nil) {
-}
-```
+
+    if (someObject == nil) {
+    }
+
 
 -----
 
 **For a `BOOL`, here are two examples:**
 
-```objc
-if (isAwesome)
-if (![someObject boolValue])
-```
+
+    if (isAwesome)
+    if (![someObject boolValue])
+
 
 **Not:**
 
-```objc
-if ([someObject boolValue] == NO)
-if (isAwesome == YES) // Never do this.
-```
+
+    if ([someObject boolValue] == NO)
+    if (isAwesome == YES) // Never do this.
+
 
 -----
 
 If the name of a `BOOL` property is expressed as an adjective, the property can omit the “is” prefix but specifies the conventional name for the get accessor, for example:
 
-```objc
-@property (assign, getter=isEditable) BOOL editable;
-```
+
+    @property (assign, getter=isEditable) BOOL editable;
+
 Text and example taken from the [Cocoa Naming Guidelines](https://developer.apple.com/library/mac/#documentation/Cocoa/Conceptual/CodingGuidelines/Articles/NamingIvarsAndTypes.html#//apple_ref/doc/uid/20001284-BAJGIIJE).
 
 ## Singletons
 
 Singleton objects should use a thread-safe pattern for creating their shared instance.
 
-```objc
-+ (instancetype)sharedInstance {
-   static id sharedInstance = nil;
 
-   static dispatch_once_t onceToken;
-   dispatch_once(&onceToken, ^{
-      sharedInstance = [[self alloc] init];
-   });
+    + (instancetype)sharedInstance {
+        static id sharedInstance = nil;
 
-   return sharedInstance;
-}
-```
+       static dispatch_once_t onceToken;
+       dispatch_once(&onceToken, ^{
+          sharedInstance = [[self alloc] init];
+       });
+
+       return sharedInstance;
+    }
+
 This will prevent [possible and sometimes prolific crashes](http://cocoasamurai.blogspot.com/2011/04/singletons-your-doing-them-wrong.html).
 
 ## DLog
 
 DLog should be used in place of NSLog in all situations. NSLog should not be used directly in the code.
-```objc 
-#if DEBUG 
-#define DLog(format, ...) NSLog((format), ## __VA_ARGS__)
-#else
-#define DLog(format, ...)
-#endif
-```
+
+    #if DEBUG 
+    #define DLog(format, ...) NSLog((format), ## __VA_ARGS__)
+    #else
+    #define DLog(format, ...)
+    #endif
+
 
 ##Pragma Marks
 
-Pragma marks should be used to split up all protcols.
+Pragma marks should be used to split up all protocols.
 
 **For example:**
 
+    #pragma mark - UITextField Delegate
+    
+    - (BOOL)textFieldShoudReturn:(UITextField *)textfield;
 
+    - (void)textFieldDidEndEditing:(UITextField *)textField;
+
+    #pragma mark - UITableView Delegate
+ 
+    - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath;
 
 ## Xcode project
 
@@ -433,14 +441,3 @@ The physical files should be kept in sync with the Xcode project files in order 
 
 When possible, always turn on "Treat Warnings as Errors" in the target's Build Settings and enable as many [additional warnings](http://boredzo.org/blog/archives/2009-11-07/warnings) as possible. If you need to ignore a specific warning, use [Clang's pragma feature](http://clang.llvm.org/docs/UsersManual.html#controlling-diagnostics-via-pragmas).
 
-# Other
-
-If ours doesn't fit your tastes, have a look at some other style guides:
-
-* [Google](http://google-styleguide.googlecode.com/svn/trunk/objcguide.xml)
-* [GitHub](https://github.com/github/objective-c-conventions)
-* [Adium](https://trac.adium.im/wiki/CodingStyle)
-* [Sam Soffes](https://gist.github.com/soffes/812796)
-* [CocoaDevCentral](http://cocoadevcentral.com/articles/000082.php)
-* [Luke Redpath](http://lukeredpath.co.uk/blog/my-objective-c-style-guide.html)
-* [Marcus Zarra](http://www.cimgf.com/zds-code-style-guide/)
